@@ -5,8 +5,7 @@ I completed a hands-on simulated SOC investigation into an executive account tak
 The investigation started with an alert showing a sign-in from Lagos that did not match the user's normal activity. I used Microsoft Entra ID sign-in and audit logs to establish what happened, trace the initial access, identify persistence, scope the incident, and recommended containment.
 <br />
 
-<h2>Tools</h2>
-Investigation Objective
+<h2>Investigation Objectives</h2>
 
 - Investigate the suspicious executive sign-in
 - Establish the user's normal sign-in activity
@@ -31,7 +30,7 @@ Investigation Objective
 
 <h2>Program walk-through:</h2>
 
-<h3>Step 1 - Triage the alert: </h3>
+<h3>Step 1: Triage the alert: </h3>
 I  started by uploading the sign-in and audit log files into Azure data explorer. After ensuring that all the data was present and in the right format, I queried the data to obtain the executive account so I could understand their sign-in activity for the incident period. I checked out their: 
 
 - IP address
@@ -40,7 +39,7 @@ I  started by uploading the sign-in and audit log files into Azure data explorer
 - Sign-in result
 - Time of activity
 
-The location appeared unusual with a Sign-In attempts coming from Lagos, but I did not treat the location alone as proof of compromise as I wanted to first understand what normal activity looked like for this account.
+The location appeared unusual with Sign-In attempts coming from Lagos, but I did not treat the location alone as proof of compromise as I wanted to first understand what normal activity looks like for this account.
 
 <br />
 <img src="https://github.com/kamgaE-hub/SOCProject2/blob/main/evidence/Suspicious-Executive-Sign-In.png"/>
@@ -71,8 +70,8 @@ For a successful login from an attacker, the password must have been obtained so
 
 <h3>Step 4: Investigating persistence - What did they do after getting in? </h3>
 
-I went further to triage the audit logs to try an understand the attacker's activity once they gained accessed into the account. Attackers will always seek to maintain their presence in an account even after they are caught. 
-Two findings: at 03:18 the attacker registered their own authenticator app ('Pixel 6') - MITRE T1098.005, they now survive a password reset. At 03:31 they created an inbox rule (RSS Subscriptions) that hides any email from finance or containing 'invoice' - MITRE T1564.008, the classic setup for invoice fraud (BEC). This is why 'just reset the password' fails as a response.
+I queried the audit logs to try an understand the attacker's activity once they gained accessed into the account. Attackers will always seek to maintain their presence in an account even after they are caught. 
+Two findings: at 03:18 the attacker registered their own authenticator app ('Pixel 6') - MITRE T1098.005, they now survive a password reset. At 03:31 UCT, they created an inbox rule (RSS Subscriptions) that hides any email from finance or containing 'invoice' - MITRE T1564.008, the classic setup for invoice fraud (BEC). This is why 'just reset the password' fails as a response.
 
 
 <img src="https://github.com/kamgaE-hub/SOCProject2/blob/main/evidence/Attackers%20activity.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -81,8 +80,8 @@ Two findings: at 03:18 the attacker registered their own authenticator app ('Pix
 
 <h3> Step 5: Scoping the Incident </h3>
 
-Once the executive account was confirmed as compromised, I expanded the investigation to check whether the attacker had accessed any other accounts.
-The attacker had targeted 26 accounts. Further investigation showed a second successfully compromised account belonginh to Priya.
+Once the executive account was confirmed as compromised, I expanded the investigation to know if the attacker had accessed any other accounts.
+The attacker had targeted **26 accounts**. Further investigation showed a second successfully compromised account belonging to Priya.
 
 Priya was successfully accessed from the same Lagos IP at approximately 03:47 UTC, around 30 minutes after the executive account.
 
@@ -94,7 +93,7 @@ Priya was successfully accessed from the same Lagos IP at approximately 03:47 UT
 
 <h3> Step 6: Investigating Priya</h3>
 
-I went further to investigate the attack on Priya's account and noticed Password Spraying with multiple Login failures on thesame night before a successful login. All coming from the same IP address in Lagos. 
+I went further to investigate the attack on Priya's account and noticed Password Spraying with multiple Login failures on thesame night before a successful login, all coming from the same IP address in Lagos. 
 
 Using the Audit logs, I noticed no activities were carried out yet in Priya's account as there were no records of activities during the time of compromise. 
 
