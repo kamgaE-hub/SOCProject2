@@ -18,7 +18,6 @@ Investigation Objective
 - Recommend containment and recovery actions
 
 
-
 <h2>Tools</h2>
 
 - Azure data explorer
@@ -33,7 +32,7 @@ Investigation Objective
 <h2>Program walk-through:</h2>
 
 <h3>Step 1 - Triage the alert: </h3>
-I  started by getting the sign-in and audit log files into Azure data explorer. After ensuring that all the data was present and in the right format, I queried the data to obtain the executive account to understand their sign-in activity for the incident period. I checked out their: 
+I  started by uploading the sign-in and audit log files into Azure data explorer. After ensuring that all the data was present and in the right format, I queried the data to obtain the executive account so I could understand their sign-in activity for the incident period. I checked out their: 
 
 - IP address
 - Location
@@ -41,7 +40,7 @@ I  started by getting the sign-in and audit log files into Azure data explorer. 
 - Sign-in result
 - Time of activity
 
-The location appeared unusual, but I did not treat the location alone as proof of compromise as I wanted to first understand what normal activity looked like for this account.
+The location appeared unusual with a Sign-In attempts coming from Lagos, but I did not treat the location alone as proof of compromise as I wanted to first understand what normal activity looked like for this account.
 
 <br />
 <img src="https://github.com/kamgaE-hub/SOCProject2/blob/main/evidence/Suspicious-Executive-Sign-In.png"/>
@@ -51,8 +50,8 @@ The location appeared unusual, but I did not treat the location alone as proof o
 
 <h3> Step 2: Establishing a Baseline - Rule out the innocent explanation (User's Normal Activity):</h3>
 
-I went ahead to review the executive's previous sign-ins to help establish a baseline. I compare suspicious activity against the user's normal activity. 
-I also compared the investigation against another suspicious-looking sign-in involving another user's (Omar)trip to Dubai, which was ultimately cleared as a false positive
+I went ahead to review the executive's previous sign-ins to help establish a baseline. I compared suspicious activity against the user's normal activity. 
+I also compared the investigation against another suspicious-looking sign-in involving another user(Omar) who took a trip to Dubai, and was ultimately cleared as a false positive
 
 <img src="https://github.com/kamgaE-hub/SOCProject2/blob/main/evidence/Baseline1.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 
@@ -152,7 +151,7 @@ omar.farah@cloudora.io shows 12 sign-ins from Dubai (185.93.245.66) across 8-10 
 | **Device Registration**  | T1098.005 | Unrecognised Pixel 6 registered as an MFA device       |
 | **Email Hiding Rules**   | T1564.008 | Finance and invoice emails moved out of the main inbox |
 
-<h2> Recommended Actions To Take:</h2>
+<h2> Recommendations:</h2>
 
 1. Revoke all active sessions and refresh tokens for daniel.reeve@cloudora.io and priya.nair@cloudora.io
 2. Force password resets for the 24 targeted-but-not-breached accounts - the spray may have come closer than the logs show.
